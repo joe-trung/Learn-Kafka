@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 from kafka import KafkaProducer, KafkaConsumer
 import threading
 
@@ -22,21 +22,19 @@ app.config['MESSAGES'] = []
 kafka_consumer = threading.Thread(target=kafka_consumer_thread)
 kafka_consumer.start()
 
-# route for page1.html
+
 @app.route('/user1')
 def page1():
-    return render_template('page1.html')
+    return render_template('page1.html', messages=app.config['MESSAGES'])
 
 # route to handle user input and send it to Kafka producer
 @app.route('/send_message1', methods=['POST'])
 def send_message1():
     message = request.form['message']
-    # send message to Kafka producer
     producer.send('my_topic', message.encode())
-    app.config['MESSAGES'].append(message)
-    return render_template('page1.html', messages=app.config['MESSAGES'])
+    return redirect(url_for('page1'))
 
-# route for page2.html
+
 @app.route('/user2')
 def page2():
     return render_template('page2.html', messages=app.config['MESSAGES'])
@@ -44,10 +42,9 @@ def page2():
 @app.route('/send_message2', methods=['POST'])
 def send_message2():
     message = request.form['message']
-    # send message to Kafka producer
     producer.send('my_topic', message.encode())
-    app.config['MESSAGES'].append(message)
-    return render_template('page2.html', messages=app.config['MESSAGES'])
+    return redirect(url_for('page2'))
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
