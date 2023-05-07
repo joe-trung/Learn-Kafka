@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Page 2</title>
+    <script>
+      function refreshPage() {
+        location.reload();
+      }
+      setInterval(refreshPage, 3000); // Refresh every second
+    </script>
+  </head>
+  <body>
+    <h1>Page 2</h1>
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

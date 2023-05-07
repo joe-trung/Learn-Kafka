@@ -8,7 +8,6 @@ Session = sessionmaker(bind=engine)
 
 Base = declarative_base()
 
-
 class Transaction(Base):
     __tablename__ = 'users'
 

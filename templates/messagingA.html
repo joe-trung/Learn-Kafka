@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Instant Messaging</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			setInterval(function() {
+				$('#messages').load('get-messages.php');
+			}, 1000);
+		});
+	</script>
+</head>
+<body>
+	<h1>Instant Messaging</h1>
+	<div>
+		<h2>Send a message</h2>
+		<form action="send-message.php" method="POST">
+			<input type="text" name="message" placeholder="Type your message here">
+			<button type="submit">Send</button>
+		</form>
+	</div>
+	<div>
+		<h2>Received Messages</h2>
+		<div id="messages"></div>
+	</div>
+</body>
+</html>
