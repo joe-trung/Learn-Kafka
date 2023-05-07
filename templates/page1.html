@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Page 1</title>
+    <title>User 1</title>
+    <script>
+      function refreshPage() {
+        location.reload();
+      }
+      setInterval(refreshPage, 5000); // Refresh every 5 seconds
+    </script>
   </head>
   <body>
-    <h1>Page 1</h1>
-    <form action="/send_message" method="POST" target="_self">
+    <h1>User 1</h1>
+    <form action="/send_message1" method="POST" target="_self">
       <label for="message">Enter a message:</label>
       <input type="text" id="message" name="message"><br><br>
       <input type="submit" value="Send">
     </form>
-
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
+    <ul>
+      {{message}}
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
   </body>
 </html>

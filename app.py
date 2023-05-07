@@ -23,21 +23,30 @@ kafka_consumer = threading.Thread(target=kafka_consumer_thread)
 kafka_consumer.start()
 
 # route for page1.html
-@app.route('/')
-def index():
+@app.route('/user1')
+def page1():
     return render_template('page1.html')
 
 # route to handle user input and send it to Kafka producer
-@app.route('/send_message', methods=['POST'])
-def send_message():
+@app.route('/send_message1', methods=['POST'])
+def send_message1():
     message = request.form['message']
     # send message to Kafka producer
     producer.send('my_topic', message.encode())
-    return render_template('page1.html')
+    app.config['MESSAGES'].append(message)
+    return render_template('page1.html', messages=app.config['MESSAGES'])
 
 # route for page2.html
-@app.route('/messages')
-def messages():
+@app.route('/user2')
+def page2():
+    return render_template('page2.html', messages=app.config['MESSAGES'])
+
+@app.route('/send_message2', methods=['POST'])
+def send_message2():
+    message = request.form['message']
+    # send message to Kafka producer
+    producer.send('my_topic', message.encode())
+    app.config['MESSAGES'].append(message)
     return render_template('page2.html', messages=app.config['MESSAGES'])
 
 if __name__ == '__main__':
